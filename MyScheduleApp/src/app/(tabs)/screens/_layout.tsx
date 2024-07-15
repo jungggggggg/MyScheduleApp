@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   focusedLabel: {
-    backgroundColor: 'blue',
+    backgroundColor: '#3D56F6',
   },
   labelText: {
     color: 'black',

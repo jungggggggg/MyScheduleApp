@@ -4,7 +4,7 @@ import { Octicons } from '@expo/vector-icons';
 
 export default function TabsLayout() {
     return (
-        <Tabs screenOptions={{ tabBarActiveTintColor: 'blue'}}>
+        <Tabs screenOptions={{ tabBarActiveTintColor: '#3D56F6'}}>
             <Tabs.Screen name='screens'  options={{ tabBarLabel:'홈',headerShown: false, 
                 tabBarIcon: ({ color }) => 
                 <Entypo name="home" size={24} color={color} />}} />

@@ -33,7 +33,7 @@ const AddButton = ({ onAddTask }: AddButtonProps) => {
                 scrollEnabled={false}
             />
             <Pressable style={({ pressed }) =>
-                [{ backgroundColor: pressed ? 'darkblue' : 'blue' }, styles.ButtonStyle]}
+                [{ backgroundColor: pressed ? 'darkblue' : '#3D56F6' }, styles.ButtonStyle]}
                 onPress={handleAddTask}>
                 <Text style={{ color: 'white', fontSize: 30, fontWeight: '500' }}>+</Text>
             </Pressable>

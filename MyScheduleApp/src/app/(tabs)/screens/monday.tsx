@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import TaskListItem from "../../../components/TaskListItem";
 import ShowToday from "../../../components/ShowToday";
+import DeleteAll from "../../../components/DeleteAll";
 
 
 
@@ -30,22 +31,31 @@ const MondayScreen = () => {
             return updatedTasks;
         })
     }
- 
+
+    const deleteAllTasks = () => {
+        setTasks([])
+    }
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}>
-                <View style={styles.TodayIs}>
-                <ShowToday name={'월요일'} />
+            <View style={styles.TodayIs}>
+                <View style={{ position: 'absolute'}}>
+                    <ShowToday name={'월요일'} />
                 </View>
+                <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 3}}>
+                    <DeleteAll deleteAll={deleteAllTasks}/>
+                </View>
+            </View>
             <SafeAreaView style={styles.ScreenStyle}>
                 <FlatList data={tasks}
-                keyExtractor={item => item.id}
-                renderItem={({ item, index }) => <TaskListItem task={item} onDelete={() => deleteTask(index)} />}
-                ListFooterComponent={() => <AddButton onAddTask={addTask} />}
-                ListFooterComponentStyle={styles.ListFooterStyle}
-                showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item, index }) => <TaskListItem task={item} onDelete={() => deleteTask(index)} />}
+                    ListFooterComponent={() => <AddButton onAddTask={addTask} />}
+                    ListFooterComponentStyle={styles.ListFooterStyle}
+                    showsVerticalScrollIndicator={false}
                 />
             </SafeAreaView>
         </KeyboardAvoidingView>
@@ -68,7 +78,8 @@ const styles = StyleSheet.create({
     TodayIs: {
         alignItems: 'center',
         justifyContent: 'center',
-
+        flexDirection: 'row',
+        width: '100%',
     }
 })
 
