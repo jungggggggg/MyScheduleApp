@@ -16,8 +16,8 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function ScreensLayout() {
   return (
-    <Tab.Navigator screenOptions={({ route }) => ({
-      tabBarIndicatorStyle: { height: 0 }, tabBarLabel: ({ focused }) => (
+    <Tab.Navigator screenOptions={({ route }) => ({ 
+      tabBarIndicatorStyle: { height: 0 }, swipeEnabled: false, tabBarLabel: ({ focused }) => (
         <View style={[styles.labelContainer, focused && styles.focusedLabel]}>
           <Text style={[styles.labelText, focused && styles.focusedLabelText]}>{route.name}</Text>
         </View>

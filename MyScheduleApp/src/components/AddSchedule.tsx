@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Task } from "../app/(tabs)/screens/monday";
 
 
@@ -16,6 +16,7 @@ const AddButton = ({ onAddTask }: AddButtonProps) => {
         if (newTask.trim() === '') {
             return;
         }
+        Keyboard.dismiss();
         onAddTask({ title: newTask, id: Date.now().toString() })
         setNewTask('')
     }
@@ -29,6 +30,7 @@ const AddButton = ({ onAddTask }: AddButtonProps) => {
                     setInputHeight(event.nativeEvent.contentSize.height + 10)
                 }}
                 onChangeText={setNewTask}
+                scrollEnabled={false}
             />
             <Pressable style={({ pressed }) =>
                 [{ backgroundColor: pressed ? 'darkblue' : 'blue' }, styles.ButtonStyle]}

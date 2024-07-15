@@ -8,7 +8,7 @@ export default function TabsLayout() {
             <Tabs.Screen name='screens'  options={{ tabBarLabel:'홈',headerShown: false, 
                 tabBarIcon: ({ color }) => 
                 <Entypo name="home" size={24} color={color} />}} />
-            <Tabs.Screen name='profile' options={{ tabBarLabel:'프로필',headerShown: false, 
+            <Tabs.Screen name='profile' options={{ tabBarLabel:'프로필', headerShown: false, 
                 tabBarIcon: ({ color }) =>  
                 <Octicons name="person-fill" size={24} color={color} />}} />
         </Tabs>
