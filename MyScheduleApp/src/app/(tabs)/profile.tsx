@@ -1,19 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import ProfileImagePicker from "../../components/ImagePicker";
 
-export default function App() {
+
+export default function ProfileScreen() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <ProfileImagePicker />
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
