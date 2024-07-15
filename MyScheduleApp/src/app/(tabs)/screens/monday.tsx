@@ -12,9 +12,6 @@ export type Task = {
 }
 
 const dummyTasks: Task[] = [
-    { id: '1', title: 'Task 1' },
-    { id: '2', title: 'Task 2' },
-    { id: '3', title: 'Task 3' },
 ]
 
 const MondayScreen = () => {
@@ -34,6 +31,7 @@ const MondayScreen = () => {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => <TaskListItem task={item} />}
                 ListFooterComponent={() => <AddButton onAddTask={addTask} />}
+                ListFooterComponentStyle={styles.ListFooterStyle}
                 />
             </SafeAreaView>
         </KeyboardAvoidingView>
@@ -48,6 +46,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    ListFooterStyle: {
+        marginTop: 10,
     }
 })
 
