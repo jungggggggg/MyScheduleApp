@@ -14,17 +14,17 @@ export default function ProfileImagePicker() {
       quality: 1,
     });
 
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
 
+
   return (
     <View style={styles.container}>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
-      <Button title="프로필 사진 선택" onPress={pickImage} />
+      {image ? (<Image source={{ uri: image }} style={styles.image} />) : <View style={styles.noImage}/> }
+      <Button color="blue" title="프로필 선택" onPress={pickImage} />
     </View>
   );
 }
@@ -38,5 +38,12 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+    borderRadius: 100,
   },
+  noImage:{
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: '#F0F3F4',
+  }
 });
