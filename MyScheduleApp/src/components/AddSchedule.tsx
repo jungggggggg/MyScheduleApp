@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Task } from "../app/(tabs)/screens/monday";
 
 
+type AddButtonProps = {
+    onAddTask: (task: Task) => void;
+}
 
-
-const AddButton = () => {
+const AddButton = ({ onAddTask }: AddButtonProps) => {
 
     const [newTask, setNewTask] = useState('');
     const [inputHeight, setInputHeight] = useState(40);
+
+    const handleAddTask = () => {
+        if (newTask.trim() === '') {
+            return;
+        }
+        onAddTask({ title: newTask, id: Date.now().toString() })
+        setNewTask('')
+    }
 
     return (
         <View>
@@ -17,10 +28,11 @@ const AddButton = () => {
                 onContentSizeChange={(event) => {
                     setInputHeight(event.nativeEvent.contentSize.height + 10)
                 }}
+                onChangeText={setNewTask}
             />
             <Pressable style={({ pressed }) =>
                 [{ backgroundColor: pressed ? 'darkblue' : 'blue' }, styles.ButtonStyle]}
-                onPress={() => { }}>
+                onPress={handleAddTask}>
                 <Text style={{ color: 'white', fontSize: 30, fontWeight: '500' }}>+</Text>
             </Pressable>
         </View>

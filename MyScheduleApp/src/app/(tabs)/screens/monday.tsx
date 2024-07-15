@@ -20,6 +20,10 @@ const dummyTasks: Task[] = [
 const MondayScreen = () => {
 
     const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+
+    const addTask = (newTask: Task) => {
+        setTasks([...tasks, newTask])
+    }
  
     return (
         <KeyboardAvoidingView
@@ -29,7 +33,7 @@ const MondayScreen = () => {
                 <FlatList data={tasks}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => <TaskListItem task={item} />}
-                ListFooterComponent={() => <AddButton />}
+                ListFooterComponent={() => <AddButton onAddTask={addTask} />}
                 />
             </SafeAreaView>
         </KeyboardAvoidingView>
