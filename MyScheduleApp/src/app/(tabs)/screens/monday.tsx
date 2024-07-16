@@ -1,10 +1,12 @@
-import { Text, StatusBar, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, FlatList, View } from "react-native";
+import { Text, StatusBar, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, FlatList, View, Alert } from "react-native";
 import AddButton from "../../../components/AddSchedule";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskListItem from "../../../components/TaskListItem";
 import ShowToday from "../../../components/ShowToday";
 import DeleteAll from "../../../components/DeleteAll";
+import WhatDayToday from "../../../services/dayService";
+import dayjs from "dayjs";
 
 
 
@@ -17,11 +19,40 @@ const dummyTasks: Task[] = [
 ]
 
 const MondayScreen = () => {
-
+    
     const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+    
+    const MONDAY = '월요일'
+    const [nextId, setNextId] = useState<number>(1);
+
+
+    let currentDate = dayjs()
+    let foundDate = ''
+
+    for (let i = 0; i < 8; i++) {
+        if (currentDate.format('dddd') === MONDAY) {
+            foundDate = currentDate.format('YYYY년 MM월 DD일');
+            break;
+        }
+        currentDate = currentDate.add(1, 'day');
+    }
+
+    const { today, whatDay } = WhatDayToday();
+
+    const isSame = today === foundDate;
 
     const addTask = (newTask: Task) => {
-        setTasks([...tasks, newTask])
+        const newTaskWithId = { ...newTask, id: nextId.toString() }
+
+        if (tasks.length === 0 || (!isSame && whatDay === MONDAY) ) {
+            setTasks([...tasks, { title: foundDate + ' 일정', id: '0'
+            }, newTaskWithId])
+
+        } else {
+            setTasks([...tasks, newTaskWithId])
+        }
+        
+        setNextId(nextId + 1)
     }
 
     const deleteTask = (index: number) => {
@@ -34,7 +65,9 @@ const MondayScreen = () => {
 
     const deleteAllTasks = () => {
         setTasks([])
+        setNextId(1);
     }
+
 
     return (
         <KeyboardAvoidingView
@@ -42,11 +75,11 @@ const MondayScreen = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}>
             <View style={styles.TodayIs}>
-                <View style={{ position: 'absolute'}}>
+                <View style={{ position: 'absolute' }}>
                     <ShowToday name={'월요일'} />
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 3}}>
-                    <DeleteAll deleteAll={deleteAllTasks}/>
+                <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 3 }}>
+                    <DeleteAll deleteAll={deleteAllTasks} />
                 </View>
             </View>
             <SafeAreaView style={styles.ScreenStyle}>

@@ -1,5 +1,5 @@
 
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Alert, Pressable, StyleSheet, Text } from "react-native";
 
 
 
@@ -7,10 +7,28 @@ type Deleting = {
     deleteAll: () => void;
 }
 
+
+
 export default function DeleteAll({ deleteAll }: Deleting) {
 
+
+    const deleteItem = () => {
+        Alert.alert(
+            '삭제',
+            '모든 일정이 삭제됩니다.',
+            [
+                {text: '취소', onPress: () => {}, style: 'cancel'},
+                {text: '확인', onPress: deleteAll, style: 'destructive'},
+            ],
+            {cancelable: true,
+                onDismiss: () => {}
+            }
+        )
+    }
+
+
     return (
-        <Pressable onPress={deleteAll} style={styles.ButtonContainer}>
+        <Pressable onPress={deleteItem} style={styles.ButtonContainer}>
             <Text style={styles.ButtonText}>모두 완료!</Text>
         </Pressable>
     )

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Task } from "../app/(tabs)/screens/monday";
 
@@ -13,11 +13,12 @@ const AddButton = ({ onAddTask }: AddButtonProps) => {
     const [inputHeight, setInputHeight] = useState(40);
 
     const handleAddTask = () => {
+
         if (newTask.trim() === '') {
             return;
         }
         Keyboard.dismiss();
-        onAddTask({ title: newTask, id: Date.now().toString() })
+        onAddTask({ title: newTask, id: '' })
         setNewTask('')
     }
 
