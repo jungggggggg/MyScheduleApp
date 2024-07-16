@@ -13,45 +13,21 @@ import dayjs from "dayjs";
 export type Task = {
     title: string;
     id: string;
+    datetime: string;
 }
 
-const dummyTasks: Task[] = [
-]
+const dummyTasks: Task[] = []
 
 const MondayScreen = () => {
     
     const [tasks, setTasks] = useState<Task[]>(dummyTasks);
     
-    const MONDAY = '월요일'
     const [nextId, setNextId] = useState<number>(1);
 
 
-    let currentDate = dayjs()
-    let foundDate = ''
-
-    for (let i = 0; i < 8; i++) {
-        if (currentDate.format('dddd') === MONDAY) {
-            foundDate = currentDate.format('YYYY년 MM월 DD일');
-            break;
-        }
-        currentDate = currentDate.add(1, 'day');
-    }
-
-    const { today, whatDay } = WhatDayToday();
-
-    const isSame = today === foundDate;
 
     const addTask = (newTask: Task) => {
-        const newTaskWithId = { ...newTask, id: nextId.toString() }
-
-        if (tasks.length === 0 || (!isSame && whatDay === MONDAY) ) {
-            setTasks([...tasks, { title: foundDate + ' 일정', id: '0'
-            }, newTaskWithId])
-
-        } else {
-            setTasks([...tasks, newTaskWithId])
-        }
-        
+        setTasks([...tasks, newTask])
         setNextId(nextId + 1)
     }
 
@@ -83,13 +59,12 @@ const MondayScreen = () => {
                 </View>
             </View>
             <SafeAreaView style={styles.ScreenStyle}>
-                <FlatList data={tasks}
+                <FlatList 
+                    data={tasks}
                     keyExtractor={item => item.id}
                     renderItem={({ item, index }) => <TaskListItem task={item} onDelete={() => deleteTask(index)} />}
-                    ListFooterComponent={() => <AddButton onAddTask={addTask} />}
-                    ListFooterComponentStyle={styles.ListFooterStyle}
-                    showsVerticalScrollIndicator={false}
                 />
+                <AddButton onAddTask={addTask} nextId={nextId} />
             </SafeAreaView>
         </KeyboardAvoidingView>
     )
