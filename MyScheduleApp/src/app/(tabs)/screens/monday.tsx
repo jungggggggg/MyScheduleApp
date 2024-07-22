@@ -1,94 +1,71 @@
-import { Text, StatusBar, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, FlatList, View, Alert } from "react-native";
-import AddButton from "../../../components/AddSchedule";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useEffect, useState } from "react";
-import TaskListItem from "../../../components/TaskListItem";
-import ShowToday from "../../../components/ShowToday";
-import DeleteAll from "../../../components/DeleteAll";
-import WhatDayToday from "../../../services/dayService";
-import dayjs from "dayjs";
+import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { Task, useTaskManager } from '../../../components/TaskManager';
+import TaskListItem from '../../../components/TaskListItem';
 
+const MondayScreen: React.FC = () => {
+  const { tasks, deleteTask, setTasks } = useTaskManager();
+  const mondayTasks = tasks.filter(task => task.dateday === '월요일');
+  const groupedTasks = groupTasksByDate(mondayTasks);
 
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>월요일 일정</Text>
+      <FlatList
+        data={Object.keys(groupedTasks)}
+        keyExtractor={(date) => date}
+        renderItem={({ item: date }) => (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{formatDate(date)}</Text>
+            <FlatList
+              data={groupedTasks[date]}
+              keyExtractor={(task) => task.id}
+              renderItem={({ item }) => (
+                <TaskListItem task={item} onDelete={() => deleteTask(item.id)} />
+              )}
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+};
 
-export type Task = {
-    title: string;
-    id: string;
-    datetime: string;
-}
+const groupTasksByDate = (tasks: Task[]): { [key: string]: Task[] } => {
+    return tasks.reduce((groups: { [key: string]: Task[] }, task: Task) => {
+      const date = task.datetime; 
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(task);
+      return groups;
+    }, {});
+  };
 
-const dummyTasks: Task[] = []
-
-const MondayScreen = () => {
-    
-    const [tasks, setTasks] = useState<Task[]>(dummyTasks);
-    
-    const [nextId, setNextId] = useState<number>(1);
-
-
-
-    const addTask = (newTask: Task) => {
-        setTasks([...tasks, newTask])
-        setNextId(nextId + 1)
-    }
-
-    const deleteTask = (index: number) => {
-        setTasks((currentTasks) => {
-            const updatedTasks = [...currentTasks];
-            updatedTasks.splice(index, 1);
-            return updatedTasks;
-        })
-    }
-
-    const deleteAllTasks = () => {
-        setTasks([])
-        setNextId(1);
-    }
-
-
-    return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}>
-            <View style={styles.TodayIs}>
-                <View style={{ position: 'absolute' }}>
-                    <ShowToday name={'월요일'} />
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row-reverse', padding: 3 }}>
-                    <DeleteAll deleteAll={deleteAllTasks} />
-                </View>
-            </View>
-            <SafeAreaView style={styles.ScreenStyle}>
-                <FlatList 
-                    data={tasks}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item, index }) => <TaskListItem task={item} onDelete={() => deleteTask(index)} />}
-                />
-                <AddButton onAddTask={addTask} nextId={nextId} />
-            </SafeAreaView>
-        </KeyboardAvoidingView>
-    )
-}
+  const formatDate = (date: string): string => {
+    const [month, day] = date.split('-');
+    return `${month}월 ${day}일`;
+  };
+  
 
 const styles = StyleSheet.create({
-    ScreenStyle: {
-        flex: 1,
-        alignItems: 'center',
-        paddingTop: 0,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    ListFooterStyle: {
-        marginTop: 10,
-    },
-    TodayIs: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        width: '100%',
-    }
-})
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+});
 
 export default MondayScreen;

@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko'; // 한국어 로케일을 로드합니다.
 
+dayjs.locale('ko');
 
 
 
 type AddButtonProps = {
     onAddTask: (task: Task) => void;
-    nextId: number;
 }
 
 export type Task = {
     title: string;
     id: string;
     datetime: string;
+    dateday: string;
 }
 
 const dummyTasks: Task[] = [
 ]
 
-const AddButton = ({ onAddTask, nextId }: AddButtonProps) => {
+const AddButton = ({ onAddTask }: AddButtonProps) => {
 
     const [newTask, setNewTask] = useState('');
     const [isMonth, setIsMonth] = useState('');
     const [isDay, setIsDay] = useState('');
 
-    const ScheduleDay = `${isMonth}-${isDay}`;
 
     const handleAddTask = () => {
         const month = parseInt(isMonth, 10);
@@ -47,8 +49,13 @@ const AddButton = ({ onAddTask, nextId }: AddButtonProps) => {
             return;
         }
 
+
+    const ScheduleDay = `${isMonth}-${isDay}`;
+
+    const dayOfWeek = dayjs(`2024-${isMonth}-${isDay}`).format('dddd');
+
         Keyboard.dismiss();
-        onAddTask({ title: newTask, id: '', datetime: ScheduleDay });
+        onAddTask({ title: newTask, id: `${Date.now()}`, datetime: ScheduleDay, dateday: dayOfWeek });
         setNewTask('');
         setIsMonth('');
         setIsDay('');
@@ -60,6 +67,8 @@ const AddButton = ({ onAddTask, nextId }: AddButtonProps) => {
     };
 
     return (
+        <View style={{ alignItems: 'center'}}>
+            <Text style={{ paddingBottom: 20, fontWeight: 'bold' }}>일정을 입력하시면 자동으로 일정 탭에 추가됩니다!</Text>
         <View style={styles.InputContainer}>
             <TextInput style={styles.InputStyle}
                 placeholder="새로운 일정 추가"
@@ -97,6 +106,7 @@ const AddButton = ({ onAddTask, nextId }: AddButtonProps) => {
                 onPress={handleAddTask}>
                 <Text style={{ color: 'white', fontSize: 30, fontWeight: '500' }}>+</Text>
             </Pressable>
+        </View>
         </View>
     )
 }

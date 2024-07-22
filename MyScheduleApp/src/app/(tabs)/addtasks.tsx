@@ -1,22 +1,36 @@
-import { View,Text, StyleSheet } from "react-native";
-import AddButton from "../../components/AddSchedule";
+// app/screens/addtasks.tsx
+import React from 'react';
+import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet } from 'react-native';
+import AddButton from '../../components/AddSchedule';
+import { useTaskManager } from '../../components/TaskManager';
 
+const AddTasks: React.FC = () => {
+  const { addTask } = useTaskManager();
 
-
-
-export default function AddTasks() {
-    return(
-        <View style={styles.AddTasksScreen}>
-            <AddButton onAddTask={AddTasks} />
-        </View>
-    )
-}
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+    >
+      <SafeAreaView style={styles.ScreenStyle}>
+        <AddButton onAddTask={addTask} />
+      </SafeAreaView>
+    </KeyboardAvoidingView>
+  );
+};
 
 const styles = StyleSheet.create({
-    AddTasksScreen: {
-        flex: 1,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-})
+  ScreenStyle: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 0,
+    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});
+
+export default AddTasks;
