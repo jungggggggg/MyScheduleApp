@@ -24,7 +24,7 @@ export default function ProfileImagePicker() {
   return (
     <View style={styles.container}>
       {image ? (<Image source={{ uri: image }} style={styles.image} />) : <View style={styles.noImage}/> }
-      <Button color="blue" title="프로필 선택" onPress={pickImage} />
+      <Button color="blue" title="Select Photo" onPress={pickImage} />
     </View>
   );
 }

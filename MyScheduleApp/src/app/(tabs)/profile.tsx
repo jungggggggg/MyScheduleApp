@@ -1,10 +1,7 @@
-// src/app/(tabs)/screens/profile.tsx
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ProfileImagePicker from '../../components/ImagePicker';
 import getWeather from '../../services/weatherService';
-import WhatDayToday from '../../services/dayService';
 
 export default function ProfileScreen() {
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -22,9 +19,6 @@ export default function ProfileScreen() {
     fetchWeather();
   }, []);
 
-  useEffect(() => {
-    WhatDayToday();
-  },[])
 
   return (
     <View style={styles.container}>
@@ -50,7 +44,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   weatherContainer: {
-    marginTop: 20,
     alignItems: 'center',
   },
 });

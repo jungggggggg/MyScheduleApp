@@ -1,4 +1,3 @@
-import { Tabs } from "expo-router";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { StyleSheet, View, Text } from "react-native";
 import MondayScreen from "./monday";
@@ -20,13 +19,13 @@ export default function ScreensLayout() {
           </View>
         )
       })}>
-        <Tab.Screen name='월' component={MondayScreen} />
-        <Tab.Screen name='화' component={TuesdayScreen} />
-        <Tab.Screen name='수' component={WednesdayScreen} />
-        <Tab.Screen name='목' component={ThursdayScreen} />
-        <Tab.Screen name='금' component={FridayScreen} />
-        <Tab.Screen name='토' component={SaturdayScreen} />
-        <Tab.Screen name='일' component={SundayScreen} />
+        <Tab.Screen name='Mon' component={MondayScreen} />
+        <Tab.Screen name='Tue' component={TuesdayScreen} />
+        <Tab.Screen name='Wed' component={WednesdayScreen} />
+        <Tab.Screen name='Thu' component={ThursdayScreen} />
+        <Tab.Screen name='Fri' component={FridayScreen} />
+        <Tab.Screen name='Sat' component={SaturdayScreen} />
+        <Tab.Screen name='Sun' component={SundayScreen} />
       </Tab.Navigator>
   );
 }
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   labelContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 2.6,
     borderRadius: 20,
   },
   focusedLabel: {
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: 'black',
-    fontSize: 15
+    fontSize: 15,
   },
   focusedLabelText: {
     color: 'white',

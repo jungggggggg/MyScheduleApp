@@ -3,14 +3,14 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { Task, useTaskManager } from '../../../components/TaskManager';
 import TaskListItem from '../../../components/TaskListItem';
 
-const MondayScreen: React.FC = () => {
-  const { tasks, deleteTask, setTasks } = useTaskManager();
-  const mondayTasks = tasks.filter(task => task.dateday === '목요일');
-  const groupedTasks = groupTasksByDate(mondayTasks);
+const ThursdayScreen = () => {
+  const { tasks, deleteTask} = useTaskManager();
+  const thursdayTasks = tasks.filter(task => task.dateday === '목요일');
+  const groupedTasks = groupTasksByDate(thursdayTasks);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>목요일 일정</Text>
+      <Text style={styles.title}>Thursday Schedule</Text>
       <FlatList
         data={Object.keys(groupedTasks)}
         keyExtractor={(date) => date}
@@ -44,7 +44,7 @@ const groupTasksByDate = (tasks: Task[]): { [key: string]: Task[] } => {
   
   const formatDate = (date: string): string => {
     const [month, day] = date.split('-');
-    return `${month}월 ${day}일`;
+    return `${month} / ${day}`;
   };
 
 const styles = StyleSheet.create({
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MondayScreen;
+export default ThursdayScreen;

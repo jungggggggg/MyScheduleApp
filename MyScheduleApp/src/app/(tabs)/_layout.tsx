@@ -9,17 +9,17 @@ export default function TabsLayout() {
         <TaskManagerProvider>
         <Tabs screenOptions={{ tabBarActiveTintColor: '#3D56F6' }}>
             <Tabs.Screen name='screens' options={{
-                tabBarLabel: '일정', headerShown: false,
+                tabBarLabel: 'Schedule', headerShown: false,
                 tabBarIcon: ({ color }) =>
                     <FontAwesome name="list-alt" size={24} color={color} />
             }} />
             <Tabs.Screen name='addtasks' options={{
-                tabBarLabel: '일정추가', headerShown: false,
+                tabBarLabel: 'Add Schedule', headerShown: false,
                 tabBarIcon: ({ color }) =>
                     <Entypo name="add-to-list" size={24} color={color} />
             }} />
             <Tabs.Screen name='profile' options={{
-                tabBarLabel: '프로필', headerShown: false,
+                tabBarLabel: 'Profile', headerShown: false,
                 tabBarIcon: ({ color }) =>
                     <Octicons name="person-fill" size={24} color={color} />
             }} />

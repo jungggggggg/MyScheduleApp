@@ -10,8 +10,7 @@ export type Task = {
 type TaskManagerContextType = {
   tasks: Task[];
   addTask: (newTask: Task) => void;
-  deleteTask: (id: string) => void; // deleteTask 함수 추가
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>; // setTasks 추가
+  deleteTask: (id: string) => void; 
 };
 
 const TaskManagerContext = createContext<TaskManagerContextType | undefined>(undefined);
@@ -36,7 +35,7 @@ const TaskManagerProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <TaskManagerContext.Provider value={{ tasks, addTask, deleteTask, setTasks }}>
+    <TaskManagerContext.Provider value={{ tasks, addTask, deleteTask }}>
         {children}
     </TaskManagerContext.Provider>
   );

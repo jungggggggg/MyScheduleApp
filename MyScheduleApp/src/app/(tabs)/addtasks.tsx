@@ -1,10 +1,9 @@
-// app/screens/addtasks.tsx
 import React from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet } from 'react-native';
 import AddButton from '../../components/AddSchedule';
 import { useTaskManager } from '../../components/TaskManager';
 
-const AddTasks: React.FC = () => {
+const AddTasks = () => {
   const { addTask } = useTaskManager();
 
   return (
